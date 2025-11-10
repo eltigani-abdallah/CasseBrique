@@ -39,3 +39,9 @@
 
 # debug information files
 *.dwo
+
+#Clion folder
+.idea/
+
+#vscode folder
+.vs/
