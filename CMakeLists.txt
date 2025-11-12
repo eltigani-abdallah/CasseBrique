@@ -10,7 +10,14 @@ set(CMAKE_CXX_STANDARD_REQUIRED ON)
 include_directories("include")
 
 # Chercher SFML 3
-find_package(SFML 3 COMPONENTS System Window Graphics Audio Network REQUIRED)
+include(FetchContent)
+FetchContent_Declare(SFML
+        GIT_REPOSITORY https://github.com/SFML/SFML.git
+        GIT_TAG 3.0.2
+        GIT_SHALLOW ON
+        EXCLUDE_FROM_ALL
+        SYSTEM)
+FetchContent_MakeAvailable(SFML)
 
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
