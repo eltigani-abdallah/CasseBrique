@@ -70,7 +70,7 @@ build main.exe: CXX_EXECUTABLE_LINKER__main_Debug CMakeFiles/main.dir/src/main.c
   FLAGS = -g
   LINK_LIBRARIES = -lsfml-system  -lsfml-window  -lsfml-graphics  -lsfml-audio  -lsfml-network  -lkernel32 -luser32 -lgdi32 -lwinspool -lshell32 -lole32 -loleaut32 -luuid -lcomdlg32 -ladvapi32
   OBJECT_DIR = CMakeFiles\main.dir
-  POST_BUILD = cd .
+  POST_BUILD = C:\windows\system32\cmd.exe /C "cd /D C:\Users\mitch\Documents\CasseBrique\build && "C:\Program Files\CMake\bin\cmake.exe" -E copy_directory C:/Users/mitch/Documents/CasseBrique/asset C:/Users/mitch/Documents/CasseBrique/build/asset"
   PRE_LINK = cd .
   TARGET_FILE = main.exe
   TARGET_IMPLIB = libmain.dll.a
