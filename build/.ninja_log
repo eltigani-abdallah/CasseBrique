@@ -1,3 +1,6 @@
 # ninja log v7
-4	556	7844926384553665	CMakeFiles/main.dir/src/main.cpp.obj	51502b6d9f19ddd2
-556	740	7844926390076495	main.exe	42a0c2a245e1255f
+4	839	7846483247305576	CMakeFiles/main.dir/src/main.cpp.obj	51502b6d9f19ddd2
+840	1032	7846483255655101	main.exe	42a0c2a245e1255f
+2	697	7846486583904205	build.ninja	c7ee4bded5d07de5
+2	697	7846486583874219	C:/Users/mitch/Documents/CasseBrique/build/cmake_install.cmake	c7ee4bded5d07de5
+4	238	7846486663235188	main.exe	ad339e70578a52c7
