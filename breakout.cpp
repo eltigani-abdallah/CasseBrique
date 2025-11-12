@@ -15,7 +15,7 @@ const float PADDLE_SPEED = 400.0f;
 const float BALL_SPEED = 300.0f;
 const int BRICK_ROWS = 5;
 const int BRICK_COLS = 10;
-const float BRICK_WIDTH = 75.0f;
+const float BRICK_WIDTH = 99.5f;
 const float BRICK_HEIGHT = 30.0f;
 
 class Paddle {
@@ -86,6 +86,14 @@ int main() {
 
     Paddle paddle(WINDOW_WIDTH / 2 - PADDLE_WIDTH / 2, WINDOW_HEIGHT - 50);
     Ball ball(WINDOW_WIDTH / 2 - BALL_RADIUS, WINDOW_HEIGHT / 2);
+
+    /* Charger texture de la raquette
+    sf::Texture paddleTex;
+    if (!paddleTex.loadFromFile("assets/images/paddle_texture.png")) return -1;
+
+    // Appliquer texture et ajuster l’échelle
+    paddle.shape.setTexture(&paddleTex);
+    paddle.shape.setScale(PADDLE_WIDTH / paddleTex.getSize().x, PADDLE_HEIGHT / paddleTex.getSize().y);*/
 
     std::vector<Brick> bricks;
     sf::Color colors[] = {sf::Color::Red, sf::Color::Magenta, sf::Color::Yellow,
