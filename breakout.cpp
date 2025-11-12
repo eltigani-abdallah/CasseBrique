@@ -96,7 +96,7 @@ int main() {
 
     // Texte
     sf::Font font;
-    if (!font.loadFromFile("arial.ttf")) return -1;
+    if (!font.loadFromFile("assets/fonts/arial.ttf")) return -1;
     sf::Text scoreText("", font, 20);
     sf::Text livesText("", font, 20);
     sf::Text messageText("", font, 36);
@@ -106,16 +106,16 @@ int main() {
 
     // Sons
     sf::SoundBuffer bounceBuf, brickBuf, loseBuf;
-    bounceBuf.loadFromFile("bounce.wav");
-    brickBuf.loadFromFile("brick.wav");
-    loseBuf.loadFromFile("lose.wav");
+    bounceBuf.loadFromFile("assets/sounds/bounce.wav");
+    brickBuf.loadFromFile("assets/sounds/brick.wav");
+    loseBuf.loadFromFile("assets/sounds/lose.wav");
     sf::Sound bounceSound(bounceBuf);
     sf::Sound brickSound(brickBuf);
     sf::Sound loseSound(loseBuf);
 
     // Fond
     sf::Texture bgTex;
-    bgTex.loadFromFile("background.jpg");
+    bgTex.loadFromFile("assets/images/background.jpg");
     sf::Sprite background(bgTex);
 
     int score = 0, lives = 3;
