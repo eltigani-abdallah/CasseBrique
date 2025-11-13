@@ -6,6 +6,7 @@
 int main()
 {
     auto window = sf::RenderWindow(sf::VideoMode({1024u, 768u}), "SFML window");
+    sf::Vector2i mousePos = sf::Mouse::getPosition(window);
 
     printf("Blabla\n");
     while (window.isOpen())
@@ -15,6 +16,16 @@ int main()
             if (event->is<sf::Event::Closed>())
             {
                 window.close();
+            }
+
+            // si bouton quitter cliqué
+            if (event->is<sf::Event::MouseButtonPressed>())
+            {
+                mousePos = sf::Mouse::getPosition(window);
+                if (mousePos.x >= 450 && mousePos.x <= 574 && mousePos.y >= 500 && mousePos.y <= 540)
+                {
+                    window.close();
+                }
             }
         }
 
