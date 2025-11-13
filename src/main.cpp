@@ -27,14 +27,19 @@ int main()
             return 1;
         }
 
+        sf::Text title(font, "CassarBrique, THE GAME !");
+        title.setCharacterSize(60);
+        title.setPosition(title.getPosition() + sf::Vector2f{150.f, 200.f});
+
         sf::Text playButton(font, "Jouer");
         playButton.setCharacterSize(40);
-        playButton.setPosition(playButton.getPosition() + sf::Vector2f{0.f, 200.f});
+        playButton.setPosition(playButton.getPosition() + sf::Vector2f{450.f, 400.f});
 
         sf::Text quitButton(font, "Quitter");
         quitButton.setCharacterSize(40);
-        quitButton.setPosition(quitButton.getPosition() + sf::Vector2f{0.f, 300.f});
+        quitButton.setPosition(quitButton.getPosition() + sf::Vector2f{450.f, 500.f});
 
+        window.draw(title);
         window.draw(playButton);
         window.draw(quitButton);
         window.display();
