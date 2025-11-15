@@ -22,7 +22,13 @@ FetchContent_MakeAvailable(SFML)
 file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 # Ajouter ton fichier source
-add_executable(main ${SOURCES})
+add_executable(main ${SOURCES}
+        src/model/Window.cpp
+        src/model/Window.h
+        src/model/Button.cpp
+        src/model/Button.h
+        src/model/Mouse.cpp
+        src/model/Mouse.h)
 
 # Copier le dossier assets dans le répertoire de sortie (build) après la build
 add_custom_command(TARGET main POST_BUILD
