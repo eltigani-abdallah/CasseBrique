@@ -1,0 +1,11 @@
+#ifndef CASSEBRIQUE_GAMESTATE_H
+#define CASSEBRIQUE_GAMESTATE_H
+
+enum GameState {
+    WIN,
+    LOSE,
+    RUNNING,
+};
+
+
+#endif //CASSEBRIQUE_GAMESTATE_H

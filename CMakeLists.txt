@@ -23,12 +23,16 @@ file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 # Ajouter ton fichier source
 add_executable(main ${SOURCES}
-        src/model/Window.cpp
-        src/model/Window.h
-        src/model/Button.cpp
-        src/model/Button.h
-        src/model/Mouse.cpp
-        src/model/Mouse.h)
+        src/GameManager.cpp
+        include/GameManager.h
+        src/Ball.cpp
+        include/Ball.h
+        src/Paddle.cpp
+        include/Paddle.h
+        src/Brick.cpp
+        include/Brick.h
+        include/GameState.h
+        include/Surface.h)
 
 # Copier le dossier assets dans le répertoire de sortie (build) après la build
 add_custom_command(TARGET main POST_BUILD
