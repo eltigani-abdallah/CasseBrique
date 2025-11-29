@@ -13,6 +13,10 @@ sf::Vector2f Ball::getSize() const {
     return shape.getSize();
 }
 
+sf::Vector2f Ball::getPosition() const {
+    return shape.getPosition();
+}
+
 bool Ball::isOutOfBounds(float screenHeight) {
     if (shape.getPosition().y > screenHeight) {
         return true;

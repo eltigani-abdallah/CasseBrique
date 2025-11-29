@@ -16,6 +16,20 @@ void GameManager::handleEvents() {
 void GameManager::update(float deltaTime) {
 
     ball.update(deltaTime);
+    sf::Vector2f ballPos= ball.getPosition();
+    sf::Vector2f ballSize= ball.getSize();
+
+    if (ballPos.x < 0 || ballPos.x +ballSize.x > window.getSize().x) {
+        ball.bounce(Surface::WALL);
+    }
+
+    if (ballPos.y < 0) {
+        ball.bounce(Surface::TOP);
+    }
+
+    if (ball.isOutOfBounds(window.getSize().y)) {
+        ball.bounce(Surface::TOP);
+    }
 
     //handle physics here
 }
