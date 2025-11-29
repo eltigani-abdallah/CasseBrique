@@ -19,7 +19,7 @@ FetchContent_Declare(SFML
         SYSTEM)
 FetchContent_MakeAvailable(SFML)
 
-file(GLOB_RECURSE SOURCES "src/*.cpp")
+# file(GLOB_RECURSE SOURCES "src/*.cpp")
 
 # Ajouter ton fichier source
 add_executable(main ${SOURCES}
@@ -32,7 +32,8 @@ add_executable(main ${SOURCES}
         src/Brick.cpp
         include/Brick.h
         include/GameState.h
-        include/Surface.h)
+        include/Surface.h
+        src/main.cpp)
 
 # Copier le dossier assets dans le répertoire de sortie (build) après la build
 add_custom_command(TARGET main POST_BUILD

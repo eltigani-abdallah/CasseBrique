@@ -1,6 +1,8 @@
 #ifndef CASSEBRIQUE_BRICK_H
 #define CASSEBRIQUE_BRICK_H
 
+#include <SFML/Graphics.hpp>
+
 
 class Brick {
 private:

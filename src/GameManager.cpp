@@ -4,9 +4,6 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight)
     : window(sf::VideoMode({windowWidth, windowHeight}),"CassarBrique"){
     window.setFramerateLimit(60);
 
-    /*
-     *ball, paddle constructors here
-     */
 }
 
 void GameManager::handleEvents() {
@@ -16,23 +13,29 @@ void GameManager::handleEvents() {
     }
 }
 
-void GameManager::update() {
+void GameManager::update(float deltaTime) {
+
+    ball.update(deltaTime);
+
     //handle physics here
 }
 
 void GameManager::render() {
     window.clear();
 
+    window.draw(ball.getShape());
     //draw stuff here
     window.display();
 }
 
 void GameManager::run() {
     while (window.isOpen()) {
+
+        sf::Time deltaTime = clock.restart();
         handleEvents();
 
 
-        update();
+        update(deltaTime.asSeconds());
         render();
 
     }

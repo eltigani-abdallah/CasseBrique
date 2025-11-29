@@ -5,7 +5,7 @@
 enum Surface {
     WALL,
     PADDLE,
-    BOTTOM,
+    TOP,
 };
 
 #endif //CASSEBRIQUE_SURFACE_H
