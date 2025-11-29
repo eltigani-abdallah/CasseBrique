@@ -1,0 +1,8 @@
+#ifndef CASSEBRIQUE_DIRECTION_H
+#define CASSEBRIQUE_DIRECTION_H
+
+enum Direction {
+    LEFT,
+    RIGHT,
+};
+#endif //CASSEBRIQUE_DIRECTION_H

@@ -1,7 +1,8 @@
 #include "GameManager.h"
 
 GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight)
-    : window(sf::VideoMode({windowWidth, windowHeight}),"CassarBrique"){
+    : window(sf::VideoMode({windowWidth, windowHeight}),"CassarBrique"),
+    paddle(windowWidth, windowHeight){
     window.setFramerateLimit(60);
 
 }
@@ -38,6 +39,7 @@ void GameManager::render() {
     window.clear();
 
     window.draw(ball.getShape());
+    window.draw(paddle.getShape());
     //draw stuff here
     window.display();
 }
