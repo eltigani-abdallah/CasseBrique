@@ -36,7 +36,7 @@ void GameManager::update(float deltaTime) {
         ball.bounce(Surface::TOP);
     }
 
-    if (ballPos.y + ballSize.y >= paddlePos.y) {
+    if (ball.getShape().getGlobalBounds().findIntersection(paddle.getShape().getGlobalBounds())) {
         ball.bounce(Surface::PADDLE);
     }
 
