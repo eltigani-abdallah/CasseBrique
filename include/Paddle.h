@@ -15,14 +15,21 @@ public:
     sf::Vector2f getPosition() const;
     sf::Vector2f getSize() const;
 
+    void setCurrentSpeed(float newSpeed);
+    float getOriginSpeed() const;
+
 
 
 
 private:
 
     sf::RectangleShape shape;
-    float speed;
+    float currentSpeed;
+    float originSpeed;
     float offset;
+
+    float screenWidth;
+    float screenHeight;
 };
 
 

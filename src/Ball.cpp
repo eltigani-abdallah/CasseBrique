@@ -5,7 +5,7 @@
 Ball::Ball()
     : shape(sf::Vector2f(15,15)){
     shape.setPosition(sf::Vector2f(0,0));
-    this->velocity = sf::Vector2f(100,200);
+    velocity = sf::Vector2f(100,200);
     shape.setFillColor(sf::Color::White);
 }
 

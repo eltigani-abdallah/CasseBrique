@@ -20,6 +20,10 @@ void GameManager::update(float deltaTime) {
     sf::Vector2f ballPos= ball.getPosition();
     sf::Vector2f ballSize= ball.getSize();
 
+    sf::Vector2f paddlePos= paddle.getPosition();
+    sf::Vector2f paddleSize= paddle.getSize();
+
+    // ↓ Ball collision ↓
     if (ballPos.x < 0 || ballPos.x +ballSize.x > window.getSize().x) {
         ball.bounce(Surface::WALL);
     }
@@ -32,7 +36,34 @@ void GameManager::update(float deltaTime) {
         ball.bounce(Surface::TOP);
     }
 
-    //handle physics here
+    if (ballPos.y + ballSize.y >= paddlePos.y) {
+        ball.bounce(Surface::PADDLE);
+    }
+
+    // ↑ ball collision ↑
+
+    // ↓ paddle movement ↓
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+        paddle.move(Direction::LEFT, deltaTime);
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+        paddle.move(Direction::RIGHT, deltaTime);
+    }
+
+    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
+        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RShift)) {
+        paddle.setCurrentSpeed(paddle.getOriginSpeed() * 2);
+    } else {
+        paddle.setCurrentSpeed(paddle.getOriginSpeed());
+    }
+    // ↑ paddle movement ↑
+
+
+
 }
 
 void GameManager::render() {
