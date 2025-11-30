@@ -34,7 +34,8 @@ add_executable(main ${SOURCES}
         include/GameState.h
         include/Surface.h
         src/main.cpp
-        include/Direction.h)
+        include/Direction.h
+)
 
 # Copier le dossier assets dans le répertoire de sortie (build) après la build
 add_custom_command(TARGET main POST_BUILD
