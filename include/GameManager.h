@@ -6,6 +6,7 @@
 #include "./GameState.h"
 #include <vector>
 #include <SFML/System/Clock.hpp>
+#include <algorithm>
 
 class GameManager {
 public:
@@ -15,6 +16,8 @@ public:
     void handleEvents();
     void update(float deltaTime);
     void render();
+
+    void initializeBricks(float rowNum, float colNum);
 
 
 private:

@@ -4,7 +4,7 @@
 
 Ball::Ball()
     : shape(sf::Vector2f(15,15)){
-    shape.setPosition(sf::Vector2f(0,0));
+    shape.setPosition(sf::Vector2f(300,620));
     velocity = sf::Vector2f(100,200);
     shape.setFillColor(sf::Color::White);
 }
@@ -15,6 +15,10 @@ sf::Vector2f Ball::getSize() const {
 
 sf::Vector2f Ball::getPosition() const {
     return shape.getPosition();
+}
+
+sf::Vector2f Ball::getVelocity() const {
+    return velocity;
 }
 
 bool Ball::isOutOfBounds(float screenHeight) {

@@ -5,6 +5,8 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight)
     paddle(windowWidth, windowHeight){
     window.setFramerateLimit(60);
 
+    initializeBricks(5,5);
+
 }
 
 void GameManager::handleEvents() {
@@ -19,9 +21,10 @@ void GameManager::update(float deltaTime) {
     ball.update(deltaTime);
     sf::Vector2f ballPos= ball.getPosition();
     sf::Vector2f ballSize= ball.getSize();
+    sf::Vector2f ballCenter(ballPos.x+ballSize.x/2,ballPos.y+ballSize.y/2);
 
-    sf::Vector2f paddlePos= paddle.getPosition();
-    sf::Vector2f paddleSize= paddle.getSize();
+
+
 
     // ↓ Ball collision ↓
     if (ballPos.x < 0 || ballPos.x +ballSize.x > window.getSize().x) {
@@ -40,6 +43,35 @@ void GameManager::update(float deltaTime) {
         ball.bounce(Surface::PADDLE);
     }
 
+    for (Brick& brick:bricks) {
+        sf::Vector2f brickPos = brick.getPosition();
+        sf::Vector2f brickSize = brick.getSize();
+
+        sf::Vector2f brickCenter(brickPos.x+brickSize.x/2,brickPos.y+brickSize.y/2);
+
+        sf::Vector2f deltaBallPos(ballCenter.x-brickCenter.x, ballCenter.y-brickCenter.y);
+
+        if (ball.getShape().getGlobalBounds().findIntersection(brick.getShape().getGlobalBounds())) {
+
+            float overlapX = (ballSize.x/2 + brickSize.x/2)-abs(deltaBallPos.x);
+            float overlapY = (ballSize.y/2 + brickSize.y/2)-abs(deltaBallPos.y);
+
+            if (overlapX < overlapY) {
+                ball.bounce(Surface::WALL);
+            }
+            else {
+                ball.bounce(Surface::TOP);
+            }
+
+            //ball.bounce(Surface::TOP);
+            brick.getHit();
+        }
+        bricks.erase(
+            std::remove_if(bricks.begin(), bricks.end(),
+                [](const Brick& brick)
+                {return brick.isDestroyed();}),
+                bricks.end());
+    }
     // ↑ ball collision ↑
 
     // ↓ paddle movement ↓
@@ -71,6 +103,12 @@ void GameManager::render() {
 
     window.draw(ball.getShape());
     window.draw(paddle.getShape());
+
+    for (const Brick& brick:bricks) {
+        window.draw(brick.getShape());
+
+
+    }
     //draw stuff here
     window.display();
 }
@@ -87,3 +125,15 @@ void GameManager::run() {
 
     }
 }
+
+void GameManager::initializeBricks(float rowNum, float colNum) {
+    for (int row=0;row<rowNum;row++) {
+        for (int col=0;col<colNum;col++) {
+            float x = 0+col*(100+30);
+            float y = 0+row*(50+30);
+
+            bricks.push_back(Brick(x, y));
+        }
+    }
+}
+

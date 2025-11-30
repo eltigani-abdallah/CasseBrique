@@ -1,12 +1,16 @@
 #include "Brick.h"
 
 Brick::Brick(float posX, float posY) :
-shape(sf::Vector2f(60,30)){
+shape(sf::Vector2f(100,50)){
     shape.setPosition(sf::Vector2f(posX, posY));
     shape.setFillColor(sf::Color::White);
 
     hp = 1;
 
+}
+
+void Brick::setPosition(sf::Vector2f pos) {
+    shape.setPosition(pos);
 }
 
 void Brick::getHit() {
