@@ -1,8 +1,9 @@
 #include "GameManager.h"
 
-GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight)
+GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, GameState state)
     : window(sf::VideoMode({windowWidth, windowHeight}),"CassarBrique"),
-    paddle(windowWidth, windowHeight){
+    paddle(windowWidth, windowHeight),
+    state(state){
     window.setFramerateLimit(60);
 
     initializeBricks(5,5);
@@ -18,81 +19,115 @@ void GameManager::handleEvents() {
 
 void GameManager::update(float deltaTime) {
 
-    ball.update(deltaTime);
-    sf::Vector2f ballPos= ball.getPosition();
-    sf::Vector2f ballSize= ball.getSize();
-    sf::Vector2f ballCenter(ballPos.x+ballSize.x/2,ballPos.y+ballSize.y/2);
+    if (state==GameState::RUNNING) {
+        ball.update(deltaTime);
+        sf::Vector2f ballPos= ball.getPosition();
+        sf::Vector2f ballSize= ball.getSize();
+        sf::Vector2f ballCenter(ballPos.x+ballSize.x/2,ballPos.y+ballSize.y/2);
 
-
-
-
-    // ↓ Ball collision ↓
-    if (ballPos.x < 0 || ballPos.x +ballSize.x > window.getSize().x) {
-        ball.bounce(Surface::WALL);
-    }
-
-    if (ballPos.y < 0) {
-        ball.bounce(Surface::TOP);
-    }
-
-    if (ball.isOutOfBounds(window.getSize().y)) {
-        ball.bounce(Surface::TOP);
-    }
-
-    if (ball.getShape().getGlobalBounds().findIntersection(paddle.getShape().getGlobalBounds())) {
-        ball.bounce(Surface::PADDLE);
-    }
-
-    for (Brick& brick:bricks) {
-        sf::Vector2f brickPos = brick.getPosition();
-        sf::Vector2f brickSize = brick.getSize();
-
-        sf::Vector2f brickCenter(brickPos.x+brickSize.x/2,brickPos.y+brickSize.y/2);
-
-        sf::Vector2f deltaBallPos(ballCenter.x-brickCenter.x, ballCenter.y-brickCenter.y);
-
-        if (ball.getShape().getGlobalBounds().findIntersection(brick.getShape().getGlobalBounds())) {
-
-            float overlapX = (ballSize.x/2 + brickSize.x/2)-abs(deltaBallPos.x);
-            float overlapY = (ballSize.y/2 + brickSize.y/2)-abs(deltaBallPos.y);
-
-            if (overlapX < overlapY) {
-                ball.bounce(Surface::WALL);
-            }
-            else {
-                ball.bounce(Surface::TOP);
-            }
-
-            //ball.bounce(Surface::TOP);
-            brick.getHit();
+        // ↓ check if all bricks are destroyed ↓
+        if (bricks.empty()) {
+            state=GameState::WIN;
         }
-        bricks.erase(
-            std::remove_if(bricks.begin(), bricks.end(),
-                [](const Brick& brick)
-                {return brick.isDestroyed();}),
-                bricks.end());
-    }
-    // ↑ ball collision ↑
 
-    // ↓ paddle movement ↓
+        // ↑ check if all bricks are destroyed ↑
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ||
-        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
-        paddle.move(Direction::LEFT, deltaTime);
+        // ↓ Ball collision ↓
+        if (ballPos.x < 0 || ballPos.x +ballSize.x > window.getSize().x) {
+            ball.bounce(Surface::WALL);
+        }
+
+        if (ballPos.y < 0) {
+            ball.bounce(Surface::TOP);
+        }
+
+        if (ball.isOutOfBounds(window.getSize().y)) {
+            ball.bounce(Surface::TOP);
+            state=GameState::LOSE;
+        }
+
+        if (ball.getShape().getGlobalBounds().findIntersection(paddle.getShape().getGlobalBounds())) {
+            ball.bounce(Surface::PADDLE);
+        }
+
+        for (Brick& brick:bricks) {
+            sf::Vector2f brickPos = brick.getPosition();
+            sf::Vector2f brickSize = brick.getSize();
+
+            sf::Vector2f brickCenter(brickPos.x+brickSize.x/2,brickPos.y+brickSize.y/2);
+
+            sf::Vector2f deltaBallPos(ballCenter.x-brickCenter.x, ballCenter.y-brickCenter.y);
+
+            if (ball.getShape().getGlobalBounds().findIntersection(brick.getShape().getGlobalBounds())) {
+
+                float overlapX = (ballSize.x/2 + brickSize.x/2)-abs(deltaBallPos.x);
+                float overlapY = (ballSize.y/2 + brickSize.y/2)-abs(deltaBallPos.y);
+
+                if (overlapX < overlapY) {
+                    ball.bounce(Surface::WALL);
+                }
+                else {
+                    ball.bounce(Surface::TOP);
+                }
+
+
+                brick.getHit();
+            }
+        }
+        // ↑ ball collision ↑
+
+        // ↓ erase bricks ↓
+            bricks.erase(
+                std::remove_if(bricks.begin(), bricks.end(),
+                    [](const Brick& brick)
+                    {return brick.isDestroyed();}),
+                    bricks.end());
+        // ↑ erase bricks ↑
+
+
+        // ↓ paddle movement ↓
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Left) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::A)) {
+            paddle.move(Direction::LEFT, deltaTime);
+            }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
+            paddle.move(Direction::RIGHT, deltaTime);
+            }
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RShift)) {
+            paddle.setCurrentSpeed(paddle.getOriginSpeed() * 2);
+            } else {
+                paddle.setCurrentSpeed(paddle.getOriginSpeed());
+            }
+
     }
 
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Right) ||
-        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::D)) {
-        paddle.move(Direction::RIGHT, deltaTime);
-    }
-
-    if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
-        sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RShift)) {
-        paddle.setCurrentSpeed(paddle.getOriginSpeed() * 2);
-    } else {
-        paddle.setCurrentSpeed(paddle.getOriginSpeed());
-    }
     // ↑ paddle movement ↑
+
+    // ↓ if player wins ↓
+    if (state == GameState::WIN) {
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+            state=GameState::RUNNING;
+        }
+
+    }
+    // ↑ if player wins ↑
+
+    // ↓ if player loses ↓
+
+    if (state == GameState::LOSE) {
+
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+            state=GameState::RUNNING;
+        }
+    // ↑ if player loses ↑
+
+    }
 
 
 

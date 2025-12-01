@@ -1,7 +1,8 @@
 #include "GameManager.h"
 
+
 int main() {
-    GameManager gm(600,800);
+    GameManager gm(600,800, GameState::RUNNING);
 
     gm.run();
 

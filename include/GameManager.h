@@ -10,7 +10,7 @@
 
 class GameManager {
 public:
-    GameManager(unsigned int windowWidth, unsigned int windowHeight);
+    GameManager(unsigned int windowWidth, unsigned int windowHeight, GameState state);
 
     void run();
     void handleEvents();
