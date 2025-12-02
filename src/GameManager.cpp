@@ -8,6 +8,26 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
 
     initializeBricks(5,5);
 
+    font.openFromFile("../asset/font/arial.ttf");
+
+    winText.emplace(font);
+    winText->setCharacterSize(30);
+    winText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
+    winText->setString("VICTORY");
+
+    loseText.emplace(font);
+    loseText->setCharacterSize(30);
+    loseText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
+    loseText->setString("GAME OVER");
+
+
+    restartText.emplace(font);
+    restartText->setCharacterSize(15);
+    restartText->setString("Press [Space] to restart");
+
+    restartText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2+30));
+
+
 }
 
 void GameManager::handleEvents() {
@@ -42,7 +62,6 @@ void GameManager::update(float deltaTime) {
         }
 
         if (ball.isOutOfBounds(window.getSize().y)) {
-            ball.bounce(Surface::TOP);
             state=GameState::LOSE;
         }
 
@@ -110,8 +129,10 @@ void GameManager::update(float deltaTime) {
 
     // ↓ if player wins ↓
     if (state == GameState::WIN) {
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+            ball.reset();
+            paddle.reset();
+            initializeBricks(5,5);
             state=GameState::RUNNING;
         }
 
@@ -121,8 +142,10 @@ void GameManager::update(float deltaTime) {
     // ↓ if player loses ↓
 
     if (state == GameState::LOSE) {
-
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+            ball.reset();
+            paddle.reset();
+            initializeBricks(5,5);
             state=GameState::RUNNING;
         }
     // ↑ if player loses ↑
@@ -135,14 +158,22 @@ void GameManager::update(float deltaTime) {
 
 void GameManager::render() {
     window.clear();
+    if (state == GameState::RUNNING) {
+        window.draw(ball.getShape());
+        window.draw(paddle.getShape());
 
-    window.draw(ball.getShape());
-    window.draw(paddle.getShape());
+        for (const Brick& brick:bricks) {
+            window.draw(brick.getShape());
+        }
+    }
 
-    for (const Brick& brick:bricks) {
-        window.draw(brick.getShape());
-
-
+    if (state == GameState::LOSE) {
+        window.draw(*loseText);
+        window.draw(*restartText);
+    }
+    if (state == GameState::WIN) {
+        window.draw(*winText);
+        window.draw(*restartText);
     }
     //draw stuff here
     window.display();

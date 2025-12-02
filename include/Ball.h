@@ -25,6 +25,7 @@ public:
     sf::Vector2f getSize() const;
     sf::Vector2f getPosition() const;
     sf::Vector2f getVelocity() const;
+    void reset();
 };
 
 

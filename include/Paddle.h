@@ -17,6 +17,7 @@ public:
 
     void setCurrentSpeed(float newSpeed);
     float getOriginSpeed() const;
+    void reset();
 
 
 

@@ -54,3 +54,8 @@ void Paddle::move(Direction direction, float deltaTime) {
 
     shape.setPosition(currentPosition);
 }
+
+void Paddle::reset() {
+    shape.setPosition(sf::Vector2f((screenWidth-shape.getSize().x)/2,
+        screenHeight-shape.getSize().y-offset));
+}

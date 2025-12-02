@@ -1,5 +1,6 @@
 #include "Ball.h"
 
+#include "../cmake-build-debug/_deps/sfml-src/extlibs/headers/stb_image/stb_image.h"
 
 
 Ball::Ball()
@@ -7,6 +8,10 @@ Ball::Ball()
     shape.setPosition(sf::Vector2f(300,620));
     velocity = sf::Vector2f(100,200);
     shape.setFillColor(sf::Color::White);
+}
+
+void Ball::reset() {
+    shape.setPosition(sf::Vector2f(300,620));
 }
 
 sf::Vector2f Ball::getSize() const {
@@ -20,6 +25,7 @@ sf::Vector2f Ball::getPosition() const {
 sf::Vector2f Ball::getVelocity() const {
     return velocity;
 }
+
 
 bool Ball::isOutOfBounds(float screenHeight) {
     if (shape.getPosition().y > screenHeight) {

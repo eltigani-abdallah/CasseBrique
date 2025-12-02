@@ -26,8 +26,12 @@ private:
     Ball ball;
     Paddle paddle;
     std::vector<Brick> bricks;
-    int score;
     GameState state;
+
+    sf::Font font;
+    std::optional<sf::Text> winText;
+    std::optional<sf::Text> loseText;
+    std::optional<sf::Text> restartText;
 
 };
 
