@@ -3,14 +3,14 @@
 GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, GameState state)
     : window(sf::VideoMode({windowWidth, windowHeight}),"CassarBrique"),
     paddle(windowWidth, windowHeight),
-    state(state){
-    window.setFramerateLimit(60);
+    state(state){ //initialize members that must be initialized before object construction
+    window.setFramerateLimit(60); //framerate limiter so the game doesn't go too fast
 
     initializeBricks(5,5);
 
-    font.openFromFile("../asset/font/arial.ttf");
+    font.openFromFile("../asset/font/arial.ttf"); //open font from the path specified
 
-    winText.emplace(font);
+    winText.emplace(font); //emplace is used to place the newly created sf::Text into std::optional
     winText->setCharacterSize(30);
     winText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
     winText->setString("VICTORY");
@@ -43,29 +43,28 @@ void GameManager::update(float deltaTime) {
         ball.update(deltaTime);
         sf::Vector2f ballPos= ball.getPosition();
         sf::Vector2f ballSize= ball.getSize();
-        sf::Vector2f ballCenter(ballPos.x+ballSize.x/2,ballPos.y+ballSize.y/2);
+        sf::Vector2f ballCenter(ballPos.x+ballSize.x/2,ballPos.y+ballSize.y/2); //calculate the center of the ball for collision calculations
 
         // ↓ check if all bricks are destroyed ↓
         if (bricks.empty()) {
             state=GameState::WIN;
         }
-
         // ↑ check if all bricks are destroyed ↑
 
         // ↓ Ball collision ↓
-        if (ballPos.x < 0 || ballPos.x +ballSize.x > window.getSize().x) {
+        if (ballPos.x < 0 || ballPos.x +ballSize.x > window.getSize().x) { // if the ball collides with either wall
             ball.bounce(Surface::WALL);
         }
 
-        if (ballPos.y < 0) {
+        if (ballPos.y < 0) { //if the ball is on top of the screen
             ball.bounce(Surface::TOP);
         }
 
-        if (ball.isOutOfBounds(window.getSize().y)) {
+        if (ball.isOutOfBounds(window.getSize().y)) { //if the ball falls off
             state=GameState::LOSE;
         }
 
-        if (ball.getShape().getGlobalBounds().findIntersection(paddle.getShape().getGlobalBounds())) {
+        if (ball.getShape().getGlobalBounds().findIntersection(paddle.getShape().getGlobalBounds())) { //if the ball hits the paddle
             ball.bounce(Surface::PADDLE);
         }
 
@@ -73,7 +72,7 @@ void GameManager::update(float deltaTime) {
             sf::Vector2f brickPos = brick.getPosition();
             sf::Vector2f brickSize = brick.getSize();
 
-            sf::Vector2f brickCenter(brickPos.x+brickSize.x/2,brickPos.y+brickSize.y/2);
+            sf::Vector2f brickCenter(brickPos.x+brickSize.x/2,brickPos.y+brickSize.y/2); //calculate brick center to see what direction the ball should go after collision
 
             sf::Vector2f deltaBallPos(ballCenter.x-brickCenter.x, ballCenter.y-brickCenter.y);
 
@@ -83,10 +82,10 @@ void GameManager::update(float deltaTime) {
                 float overlapY = (ballSize.y/2 + brickSize.y/2)-abs(deltaBallPos.y);
 
                 if (overlapX < overlapY) {
-                    ball.bounce(Surface::WALL);
+                    ball.bounce(Surface::WALL); //bounce(WALL) reverses X velocity so it works here even though it's a brick
                 }
                 else {
-                    ball.bounce(Surface::TOP);
+                    ball.bounce(Surface::TOP); //bounce(TOP) reverses Y velocity so it's used here even though we're hitting a brick
                 }
 
 
@@ -99,7 +98,7 @@ void GameManager::update(float deltaTime) {
             bricks.erase(
                 std::remove_if(bricks.begin(), bricks.end(),
                     [](const Brick& brick)
-                    {return brick.isDestroyed();}),
+                    {return brick.isDestroyed();}), //remove_if moves elements to be removed to the end of the vector and returns an iterator to the erase function to start from
                     bricks.end());
         // ↑ erase bricks ↑
 
@@ -117,7 +116,7 @@ void GameManager::update(float deltaTime) {
             }
 
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::LShift) ||
-            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RShift)) {
+            sf::Keyboard::isKeyPressed(sf::Keyboard::Key::RShift)) { // if holding any shift the paddle speed will double
             paddle.setCurrentSpeed(paddle.getOriginSpeed() * 2);
             } else {
                 paddle.setCurrentSpeed(paddle.getOriginSpeed());
@@ -169,7 +168,7 @@ void GameManager::render() {
         window.draw(*winText);
         window.draw(*restartText);
     }
-    //draw stuff here
+
     window.display();
 }
 
@@ -180,7 +179,7 @@ void GameManager::run() {
         handleEvents();
 
 
-        update(deltaTime.asSeconds());
+        update(deltaTime.asSeconds()); //use deltaTime as seconds because it's a float
         render();
 
     }
