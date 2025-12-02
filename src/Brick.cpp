@@ -9,9 +9,6 @@ shape(sf::Vector2f(100,50)){
 
 }
 
-void Brick::setPosition(sf::Vector2f pos) {
-    shape.setPosition(pos);
-}
 
 void Brick::getHit() {
     hp-=1;
