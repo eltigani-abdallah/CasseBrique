@@ -18,6 +18,7 @@ public:
     void render();
 
     void initializeBricks(float rowNum, float colNum);
+    void resetGame();
 
 
 private:

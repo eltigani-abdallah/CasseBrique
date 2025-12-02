@@ -130,10 +130,7 @@ void GameManager::update(float deltaTime) {
     // ↓ if player wins ↓
     if (state == GameState::WIN) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-            ball.reset();
-            paddle.reset();
-            initializeBricks(5,5);
-            state=GameState::RUNNING;
+            resetGame();
         }
 
     }
@@ -143,10 +140,7 @@ void GameManager::update(float deltaTime) {
 
     if (state == GameState::LOSE) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-            ball.reset();
-            paddle.reset();
-            initializeBricks(5,5);
-            state=GameState::RUNNING;
+            resetGame();
         }
     // ↑ if player loses ↑
 
@@ -201,5 +195,13 @@ void GameManager::initializeBricks(float rowNum, float colNum) {
             bricks.push_back(Brick(x, y));
         }
     }
+}
+
+void GameManager::resetGame() {
+    ball.reset();
+    paddle.reset();
+    bricks.clear();
+    initializeBricks(5,5);
+    state=GameState::RUNNING;
 }
 
