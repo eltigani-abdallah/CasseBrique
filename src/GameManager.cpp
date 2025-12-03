@@ -3,7 +3,10 @@
 GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, GameState state)
     : window(sf::VideoMode({windowWidth, windowHeight}),"CassarBrique"),
     paddle(windowWidth, windowHeight),
-    state(state){ //initialize members that must be initialized before object construction
+    state(state)
+    { //initialize members that must be initialized before object construction
+
+
     window.setFramerateLimit(60); //framerate limiter so the game doesn't go too fast
 
     this->windowWidth = windowWidth;
@@ -39,6 +42,13 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     sf::FloatRect restartTextBounds = restartText->getLocalBounds();
     restartText->setOrigin(restartTextBounds.getCenter());
     restartText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2+30));
+
+
+    scoreText.emplace(font);
+    scoreText->setCharacterSize(30);
+    scoreText->setPosition(sf::Vector2f(0,0));
+    scoreText->setString("Score: " + std::to_string(score));
+
 
 
 }
@@ -103,6 +113,9 @@ void GameManager::update(float deltaTime) {
 
 
                 brick.getHit();
+                score+=1;
+                scoreText->setString("Score: " + std::to_string(score));
+                //std::cout<< "score is: "<< score << std::endl;
             }
         }
         // ↑ ball collision ↑
@@ -167,6 +180,7 @@ void GameManager::render() {
     if (state == GameState::RUNNING) {
         window.draw(ball.getShape());
         window.draw(paddle.getShape());
+        window.draw(*scoreText);
 
         for (const Brick& brick:bricks) {
             window.draw(brick.getShape());
@@ -216,6 +230,7 @@ void GameManager::resetGame() {
     ball.reset();
     paddle.reset();
     bricks.clear();
+    score = 0;
     initializeBricks(5,5);
     state=GameState::RUNNING;
 }
