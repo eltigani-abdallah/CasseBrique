@@ -57,6 +57,7 @@ public:
 
 private:
     sf::RenderWindow window;
+    float windowWidth, windowHeight;
     sf::Clock clock;
     Ball ball;
     Paddle paddle;

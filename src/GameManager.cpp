@@ -6,25 +6,38 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     state(state){ //initialize members that must be initialized before object construction
     window.setFramerateLimit(60); //framerate limiter so the game doesn't go too fast
 
+    this->windowWidth = windowWidth;
+    this->windowHeight = windowHeight;
+
     initializeBricks(5,5);
 
     font.openFromFile("../asset/font/arial.ttf"); //open font from the path specified
 
     winText.emplace(font); //emplace is used to place the newly created sf::Text into std::optional
     winText->setCharacterSize(30);
-    winText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
     winText->setString("VICTORY");
+    sf::FloatRect winTextBounds = winText->getLocalBounds();
+    winText->setOrigin(winTextBounds.getCenter());
+    winText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
+
+
 
     loseText.emplace(font);
     loseText->setCharacterSize(30);
-    loseText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
     loseText->setString("GAME OVER");
+    sf::FloatRect loseTextBounds = loseText->getLocalBounds();
+    loseText->setOrigin(loseTextBounds.getCenter());
+    loseText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
+
+
+
 
 
     restartText.emplace(font);
     restartText->setCharacterSize(15);
     restartText->setString("Press [Space] to restart");
-
+    sf::FloatRect restartTextBounds = restartText->getLocalBounds();
+    restartText->setOrigin(restartTextBounds.getCenter());
     restartText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2+30));
 
 
@@ -188,9 +201,12 @@ void GameManager::run() {
 void GameManager::initializeBricks(float rowNum, float colNum) {
     for (int row=0;row<rowNum;row++) {
         for (int col=0;col<colNum;col++) {
-            float x = 0+col*(100+30);
-            float y = 0+row*(50+30);
+            float x = 50+col*(100+30); //starting X position + column *(brick width + gap so bricks don't touch)
+            float y = 50+row*(50+30); // starting Y position + column * (brick height + gap so bricks don't touch)
 
+            if (x+100>windowWidth) {
+                continue;
+            }
             bricks.push_back(Brick(x, y));
         }
     }
