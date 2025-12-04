@@ -49,7 +49,7 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     scoreText->setString("Score: " + std::to_string(score));
     sf::FloatRect scoreBounds=scoreText->getLocalBounds();
     scoreText->setOrigin(scoreBounds.getCenter());
-    scoreText->setPosition(sf::Vector2f(scoreText->getLocalBounds().getCenter().x,scoreText->getLocalBounds().getCenter().y));
+    scoreText->setPosition(sf::Vector2f(scoreBounds.getCenter().x,scoreBounds.getCenter().y));
 
 
 
