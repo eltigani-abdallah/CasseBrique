@@ -112,6 +112,7 @@ void GameManager::update(float deltaTime) {
         if (ball.isOutOfBounds(window.getSize().y)) {
             if (lives>0) {
                 lives -=1;
+                livesText->setString("Lives: " + std::to_string(lives));
                 state=GameState::PAUSE;
             } else {
                 state=GameState::LOSE;
