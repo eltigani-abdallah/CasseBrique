@@ -54,6 +54,11 @@ public:
      */
     void resetGame();
 
+    /**
+     * resets ball, paddle, score text and lives text to their original positions and changes the state to RUNNING
+     */
+    void unPause();
+
 
 private:
     sf::RenderWindow window;
@@ -79,6 +84,8 @@ private:
 
     int lives;
     std::optional<sf::Text> livesText;
+
+    std::optional<sf::Text> pauseText;
 };
 
 

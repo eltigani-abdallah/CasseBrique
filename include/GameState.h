@@ -5,6 +5,7 @@ enum GameState {
     WIN,
     LOSE,
     RUNNING,
+    PAUSE,
 };
 
 

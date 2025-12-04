@@ -32,6 +32,13 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     loseText->setOrigin(loseTextBounds.getCenter());
     loseText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2-30));
 
+    pauseText.emplace(font);
+    pauseText->setCharacterSize(30);
+    pauseText->setString("PAUSE");
+    sf::FloatRect pauseTextBounds = pauseText->getLocalBounds();
+    pauseText->setOrigin(pauseTextBounds.getCenter());
+    pauseText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2-60));
+
 
 
 
@@ -209,6 +216,15 @@ void GameManager::render() {
         window.draw(*winText);
         window.draw(*restartText);
     }
+    if (state==GameState::PAUSE) {
+
+        scoreText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
+        livesText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2-30));
+        window.draw(*pauseText);
+        window.draw(*scoreText);
+        window.draw(*livesText);
+        window.draw(*restartText);
+    }
 
     window.display();
 }
@@ -250,5 +266,14 @@ void GameManager::resetGame() {
     lives = 3;
     initializeBricks(5,5);
     state=GameState::RUNNING;
+}
+
+void GameManager::unPause() {
+    ball.reset();
+    paddle.reset();
+    scoreText->setPosition(sf::Vector2f(scoreText->getLocalBounds().getCenter().x,scoreText->getLocalBounds().getCenter().y));
+
+    state=GameState::RUNNING;
+
 }
 
