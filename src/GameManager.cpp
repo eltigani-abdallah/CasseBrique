@@ -86,11 +86,18 @@ void GameManager::update(float deltaTime) {
         sf::Vector2f ballSize= ball.getSize();
         sf::Vector2f ballCenter(ballPos.x+ballSize.x/2,ballPos.y+ballSize.y/2); //calculate the center of the ball for collision calculations
 
+        livesText->setString("Lives: " + std::to_string(lives));
         // ↓ check if all bricks are destroyed ↓
         if (bricks.empty()) {
             state=GameState::WIN;
         }
         // ↑ check if all bricks are destroyed ↑
+
+        // ↓ pause the game ↓
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::P)) {
+            state=GameState::PAUSE;
+        }
+        // ↑ pause the game
 
         // ↓ Ball collision ↓
         if (ballPos.x < 0 || ballPos.x +ballSize.x > window.getSize().x) { // if the ball collides with either wall
@@ -101,8 +108,14 @@ void GameManager::update(float deltaTime) {
             ball.bounce(Surface::TOP);
         }
 
-        if (ball.isOutOfBounds(window.getSize().y)) { //if the ball falls off
-            state=GameState::LOSE;
+
+        if (ball.isOutOfBounds(window.getSize().y)) {
+            if (lives>0) {
+                lives -=1;
+                state=GameState::PAUSE;
+            } else {
+                state=GameState::LOSE;
+            }
         }
 
         if (ball.getShape().getGlobalBounds().findIntersection(paddle.getShape().getGlobalBounds())) { //if the ball hits the paddle
@@ -133,7 +146,7 @@ void GameManager::update(float deltaTime) {
                 brick.getHit();
                 score+=1;
                 scoreText->setString("Score: " + std::to_string(score));
-                //std::cout<< "score is: "<< score << std::endl;
+
             }
         }
         // ↑ ball collision ↑
@@ -189,11 +202,13 @@ void GameManager::update(float deltaTime) {
 
     }
 
+    // ↓ if game is paused ↓
     if (state == GameState::PAUSE) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
             unPause();
         }
     }
+    // ↑ if game is paused ↑
 
 
 
