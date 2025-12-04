@@ -76,6 +76,9 @@ private:
 
     int score;
     std::optional<sf::Text> scoreText;
+
+    int lives;
+    std::optional<sf::Text> livesText;
 };
 
 

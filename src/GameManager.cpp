@@ -45,10 +45,19 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
 
 
     scoreText.emplace(font);
+    score = 0;
     scoreText->setCharacterSize(30);
     scoreText->setPosition(sf::Vector2f(0,0));
     scoreText->setString("Score: " + std::to_string(score));
 
+
+    livesText.emplace(font);
+    lives = 3;
+    livesText->setCharacterSize(30);
+    livesText->setString("Lives: " + std::to_string(lives));
+    sf::FloatRect livesTextBounds =livesText->getLocalBounds();
+    livesText->setOrigin(livesTextBounds.getCenter());
+    livesText->setPosition(sf::Vector2f(windowWidth-livesTextBounds.size.x/2,livesTextBounds.getCenter().y/2));
 
 
 }
@@ -181,6 +190,7 @@ void GameManager::render() {
         window.draw(ball.getShape());
         window.draw(paddle.getShape());
         window.draw(*scoreText);
+        window.draw(*livesText);
 
         for (const Brick& brick:bricks) {
             window.draw(brick.getShape());
@@ -231,6 +241,7 @@ void GameManager::resetGame() {
     paddle.reset();
     bricks.clear();
     score = 0;
+    lives = 3;
     initializeBricks(5,5);
     state=GameState::RUNNING;
 }
