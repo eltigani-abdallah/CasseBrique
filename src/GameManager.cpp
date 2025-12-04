@@ -59,7 +59,7 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     livesText->setString("Lives: " + std::to_string(lives));
     sf::FloatRect livesTextBounds =livesText->getLocalBounds();
     livesText->setOrigin(livesTextBounds.getCenter());
-    livesText->setPosition(sf::Vector2f(windowWidth-livesTextBounds.size.x/2,livesTextBounds.getCenter().y/2));
+    livesText->setPosition(sf::Vector2f(windowWidth-livesTextBounds.getCenter().x,livesTextBounds.getCenter().y));
 
 
 }
