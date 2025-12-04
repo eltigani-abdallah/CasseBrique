@@ -189,6 +189,12 @@ void GameManager::update(float deltaTime) {
 
     }
 
+    if (state == GameState::PAUSE) {
+        if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
+            unPause();
+        }
+    }
+
 
 
 }
@@ -260,10 +266,16 @@ void GameManager::resetGame() {
     ball.reset();
     paddle.reset();
     bricks.clear();
+
     score = 0;
+    lives = 3;
+
     scoreText->setString("Score: " + std::to_string(0));
     scoreText->setPosition(sf::Vector2f(scoreText->getLocalBounds().getCenter().x,scoreText->getLocalBounds().getCenter().y));
-    lives = 3;
+
+    livesText->setString("Lives: " + std::to_string(3));
+    livesText->setPosition(sf::Vector2f(windowWidth-livesText->getLocalBounds().getCenter().x,livesText->getLocalBounds().getCenter().y));
+
     initializeBricks(5,5);
     state=GameState::RUNNING;
 }
@@ -272,6 +284,7 @@ void GameManager::unPause() {
     ball.reset();
     paddle.reset();
     scoreText->setPosition(sf::Vector2f(scoreText->getLocalBounds().getCenter().x,scoreText->getLocalBounds().getCenter().y));
+    livesText->setPosition(sf::Vector2f(windowWidth-livesText->getLocalBounds().getCenter().x,livesText->getLocalBounds().getCenter().y));
 
     state=GameState::RUNNING;
 
