@@ -46,8 +46,10 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     score = 0;
     scoreText.emplace(font);
     scoreText->setCharacterSize(30);
-    scoreText->setPosition(sf::Vector2f(0,0));
     scoreText->setString("Score: " + std::to_string(score));
+    sf::FloatRect scoreBounds=scoreText->getLocalBounds();
+    scoreText->setOrigin(scoreBounds.getCenter());
+    scoreText->setPosition(sf::Vector2f(scoreText->getLocalBounds().getCenter().x,scoreText->getLocalBounds().getCenter().y));
 
 
 
@@ -189,8 +191,6 @@ void GameManager::render() {
 
     if (state == GameState::LOSE) {
         window.draw(*loseText);
-        sf::FloatRect scoreBounds=scoreText->getLocalBounds();
-        scoreText->setOrigin(scoreBounds.getCenter());
         scoreText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
         window.draw(*scoreText);
         window.draw(*restartText);
