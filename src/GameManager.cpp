@@ -30,7 +30,7 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     loseText->setString("GAME OVER");
     sf::FloatRect loseTextBounds = loseText->getLocalBounds();
     loseText->setOrigin(loseTextBounds.getCenter());
-    loseText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
+    loseText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2-30));
 
 
 
@@ -199,6 +199,10 @@ void GameManager::render() {
 
     if (state == GameState::LOSE) {
         window.draw(*loseText);
+        sf::FloatRect scoreBounds=scoreText->getLocalBounds();
+        scoreText->setOrigin(scoreBounds.getCenter());
+        scoreText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
+        window.draw(*scoreText);
         window.draw(*restartText);
     }
     if (state == GameState::WIN) {
@@ -241,6 +245,8 @@ void GameManager::resetGame() {
     paddle.reset();
     bricks.clear();
     score = 0;
+    scoreText->setString("Score: " + std::to_string(0));
+    scoreText->setPosition(sf::Vector2f(scoreText->getLocalBounds().getCenter().x,scoreText->getLocalBounds().getCenter().y));
     lives = 3;
     initializeBricks(5,5);
     state=GameState::RUNNING;
