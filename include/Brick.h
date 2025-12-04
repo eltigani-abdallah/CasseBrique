@@ -15,8 +15,9 @@ public:
      * Construct a brick, otherwise it wouldn't be called <b>brick</b> breaker
      * @param posX X position of the brick's top left corner
      * @param posY Y position of the brick's top left corner
+     * @param hp starting hp
      */
-    Brick(float posX, float posY);
+    Brick(float posX, float posY, int hp);
 
     /**
      * reduces the HP of a brick by 1. <br> maybe in the future bricks would have more HP?

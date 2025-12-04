@@ -3,7 +3,8 @@
 GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, GameState state)
     : window(sf::VideoMode({windowWidth, windowHeight}),"CassarBrique"),
     paddle(windowWidth, windowHeight),
-    state(state)
+    state(state),
+    generator(std::random_device{}()),hpDistribution(1,4)
     { //initialize members that must be initialized before object construction
 
 
@@ -273,7 +274,8 @@ void GameManager::initializeBricks(float rowNum, float colNum) {
             if (x+100>windowWidth) {
                 continue;
             }
-            bricks.push_back(Brick(x, y));
+            int randomHP = hpDistribution(generator);
+            bricks.push_back(Brick(x, y,randomHP));
         }
     }
 }
