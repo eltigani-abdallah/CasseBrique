@@ -20,29 +20,19 @@ public:
      * @param normalColor color by default
      * @param hoverColor color when hovered
      */
-    Button(std::string buttonLabel,sf::Font font, sf::Vector2f position, sf::Color normalColor, sf::Color hoverColor);
+    Button(std::string buttonLabel,sf::Font font, float textSize, sf::Vector2f position, sf::Color normalColor, sf::Color hoverColor);
 
     /**
      * check if the button is hovered or not
+     * @return true if the button is hovered with the mouse
      */
     bool isHovered();
 
     /**
-     * Start the game. sets GameState to GameState::RUNNING
+     * check if the button is clicked
+     * @return true if the button is hovered and the mouse is clicked
      */
-    void start();
-
-    /**
-     * Quits the application
-     */
-    void quit();
-
-    /**
-     * Resumes the game. only available if the menu was opened after quitting to the menu
-     */
-    void resume();
-
-
+    bool isClicked();
 
 private:
 
@@ -61,7 +51,7 @@ private:
     // text size
     float textSize;
 
-    bool hovered;
+
 };
 
 
