@@ -20,19 +20,30 @@ public:
      * @param normalColor color by default
      * @param hoverColor color when hovered
      */
-    Button(std::string buttonLabel,sf::Font font, float textSize, sf::Vector2f position, sf::Color normalColor, sf::Color hoverColor);
+    Button(std::string buttonLabel,const sf::Font& font, float textSize, sf::Vector2f position, sf::Color normalColor, sf::Color hoverColor);
 
     /**
      * check if the button is hovered or not
      * @return true if the button is hovered with the mouse
      */
-    bool isHovered();
+    bool isHovered(sf::RenderWindow& window);
 
     /**
      * check if the button is clicked
      * @return true if the button is hovered and the mouse is clicked
      */
-    bool isClicked();
+    bool isClicked(sf::RenderWindow& window);
+
+    /**
+     *
+     * @return sf::RectangleShape& of the button
+     */
+    const sf::RectangleShape& getShape() const;
+
+    /**
+     * @return sf::Text& of the button
+     */
+    const sf::Text& getText() const;
 
 private:
 

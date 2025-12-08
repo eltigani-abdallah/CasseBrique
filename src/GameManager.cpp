@@ -17,41 +17,47 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
 
     font.openFromFile("../asset/font/arial.ttf"); //open font from the path specified
 
+    // ↓ winText manipulation ↓
     winText.emplace(font); //emplace is used to place the newly created sf::Text into std::optional
     winText->setCharacterSize(30);
     winText->setString("VICTORY");
     sf::FloatRect winTextBounds = winText->getLocalBounds();
     winText->setOrigin(winTextBounds.getCenter());
     winText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2));
+    // ↑ winText manipulation ↑
 
 
-
+    // ↓ loseText manipulation ↓
     loseText.emplace(font);
     loseText->setCharacterSize(30);
     loseText->setString("GAME OVER");
     sf::FloatRect loseTextBounds = loseText->getLocalBounds();
     loseText->setOrigin(loseTextBounds.getCenter());
     loseText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2-30));
+    // ↑ loseTextManipulation ↑
 
+    // ↓ pauseText manipulation ↓
     pauseText.emplace(font);
     pauseText->setCharacterSize(30);
     pauseText->setString("PAUSE");
     sf::FloatRect pauseTextBounds = pauseText->getLocalBounds();
     pauseText->setOrigin(pauseTextBounds.getCenter());
     pauseText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2-60));
+    // ↑ pauseTextManipulation ↑
 
 
 
 
-
+    // ↓ restartText manipulation ↓
     restartText.emplace(font);
     restartText->setCharacterSize(15);
     restartText->setString("Press [Space] to restart");
     sf::FloatRect restartTextBounds = restartText->getLocalBounds();
     restartText->setOrigin(restartTextBounds.getCenter());
     restartText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2+30));
+    // ↑ restartText manipulation ↑
 
-
+    // ↓ score manipulation ↓
     scoreText.emplace(font);
     score = 0;
     scoreText->setCharacterSize(30);
@@ -59,8 +65,9 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     sf::FloatRect scoreBounds=scoreText->getLocalBounds();
     scoreText->setOrigin(scoreBounds.getCenter());
     scoreText->setPosition(sf::Vector2f(scoreBounds.getCenter().x,scoreBounds.getCenter().y));
+    // ↑ score manipulation ↑
 
-
+    // ↓ lives manipulation ↓
     livesText.emplace(font);
     lives = 3;
     livesText->setCharacterSize(30);
@@ -68,6 +75,18 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     sf::FloatRect livesTextBounds =livesText->getLocalBounds();
     livesText->setOrigin(livesTextBounds.getCenter());
     livesText->setPosition(sf::Vector2f(windowWidth-livesTextBounds.getCenter().x,livesTextBounds.getCenter().y));
+    // ↑ lives manipultion ↑
+
+    // ↓ menu buttons ↓
+    startButton.emplace("START", font, 30,
+        sf::Vector2f(windowWidth / 2, windowHeight / 2),
+    sf::Color::White, sf::Color::Green);
+
+    quitButton.emplace("QUIT", font, 30,
+        sf::Vector2f(windowWidth / 2, windowHeight / 2 + 100),
+        sf::Color::White, sf::Color::Red);
+    // ↑ menu buttons ↑
+
 
 
 }
@@ -80,6 +99,17 @@ void GameManager::handleEvents() {
 }
 
 void GameManager::update(float deltaTime) {
+
+    if (state==GameState::MENU) {
+
+        if (startButton->isClicked(window)==true) {
+            resetGame();
+        }
+        if (quitButton->isClicked(window)==true) {
+            exit(0);
+        }
+    }
+
 
     if (state==GameState::RUNNING) {
         ball.update(deltaTime);
@@ -218,6 +248,14 @@ void GameManager::update(float deltaTime) {
 
 void GameManager::render() {
     window.clear();
+
+    if (state==GameState::MENU) {
+        window.draw(startButton->getShape());
+        window.draw(startButton->getText());
+
+        window.draw(quitButton->getShape());
+        window.draw(quitButton->getText());
+    }
     if (state == GameState::RUNNING) {
         window.draw(ball.getShape());
         window.draw(paddle.getShape());

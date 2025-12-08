@@ -4,10 +4,12 @@
 #include "./Ball.h"
 #include "./Brick.h"
 #include "./GameState.h"
+#include "./Button.h"
 #include <vector>
 #include <SFML/System/Clock.hpp>
 #include <algorithm>
 #include <random>
+
 
 /**
  * Game Manager, takes care of physics, drawing, winning, losing, everything
@@ -90,6 +92,10 @@ private:
 
     std::mt19937 generator;
     std::uniform_int_distribution<int> hpDistribution;
+
+    std::optional<Button> startButton;
+
+    std::optional<Button> quitButton;
 };
 
 
