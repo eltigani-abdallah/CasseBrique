@@ -6,6 +6,7 @@ enum GameState {
     LOSE,
     RUNNING,
     PAUSE,
+    MENU,
 };
 
 

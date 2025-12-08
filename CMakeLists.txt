@@ -35,6 +35,8 @@ add_executable(main ${SOURCES}
         include/Surface.h
         src/main.cpp
         include/Direction.h
+        src/Button.cpp
+        include/Button.h
 )
 
 # Copier le dossier assets dans le répertoire de sortie (build) après la build
