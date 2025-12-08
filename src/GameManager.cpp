@@ -57,6 +57,15 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
     restartText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2+30));
     // ↑ restartText manipulation ↑
 
+    // ↓ titleText manipulation ↓
+    titleText.emplace(font);
+    titleText->setCharacterSize(50);
+    titleText->setString("CASSAR BRIQUE");
+    sf::FloatRect titleTextBounds = titleText->getLocalBounds();
+    titleText->setOrigin(titleTextBounds.getCenter());
+    titleText->setPosition(sf::Vector2f(windowWidth/2,windowHeight/2-100));
+    // ↑ titleText manipulation ↑
+
     // ↓ score manipulation ↓
     scoreText.emplace(font);
     score = 0;
@@ -250,6 +259,7 @@ void GameManager::render() {
     window.clear();
 
     if (state==GameState::MENU) {
+        window.draw(*titleText);
         window.draw(startButton->getShape());
         window.draw(startButton->getText());
 

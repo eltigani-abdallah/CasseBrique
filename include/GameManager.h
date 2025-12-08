@@ -82,6 +82,9 @@ private:
     //text to explain how to restart game
     std::optional<sf::Text> restartText;
 
+    //text to display the title of the game
+    std::optional<sf::Text> titleText;
+
     int score;
     std::optional<sf::Text> scoreText;
 
