@@ -3,6 +3,7 @@
 #include "SFML/Graphics/RectangleShape.hpp"
 #include <SFML/Graphics.hpp>
 #include <string>
+#include <optional>
 
 
 /**
@@ -19,7 +20,7 @@ public:
      * @param normalColor color by default
      * @param hoverColor color when hovered
      */
-    Button(std::string buttonText,sf::Font font, sf::Vector2f position, sf::Color normalColor, sf::Color hoverColor);
+    Button(std::string buttonLabel,sf::Font font, sf::Vector2f position, sf::Color normalColor, sf::Color hoverColor);
 
     /**
      * check if the button is hovered or not
@@ -55,7 +56,7 @@ private:
     sf::Color hoverColor;
 
     // text to be placed on button
-    sf::Text buttonText;
+    std::optional<sf::Text> buttonText;
 
     // text size
     float textSize;
