@@ -5,9 +5,10 @@
 
 Ball::Ball()
     : shape(sf::Vector2f(15,15)){
-    shape.setPosition(sf::Vector2f(300,620));
-    velocity = sf::Vector2f(100,200);
+
+    velocity = sf::Vector2f(0,0);
     shape.setFillColor(sf::Color::White);
+    speed= 0;
 }
 
 void Ball::reset() {
@@ -22,10 +23,17 @@ sf::Vector2f Ball::getPosition() const {
     return shape.getPosition();
 }
 
+void Ball::setPosition(sf::Vector2f newPosition) {
+    shape.setPosition(newPosition);
+}
+
 sf::Vector2f Ball::getVelocity() const {
     return velocity;
 }
 
+void Ball::setVelocity(sf::Vector2f newVelocity) {
+    velocity = newVelocity;
+}
 
 bool Ball::isOutOfBounds(float screenHeight) {
     if (shape.getPosition().y > screenHeight) {
@@ -41,7 +49,7 @@ const sf::RectangleShape& Ball::getShape() const {
 
 void Ball::update(float deltaTime) {
     sf::Vector2f currentPosition = shape.getPosition();
-    shape.setPosition(currentPosition+=velocity*deltaTime);
+    shape.setPosition(currentPosition+=velocity*speed*deltaTime);
 }
 
 void Ball::bounce(Surface surface) {
@@ -54,4 +62,12 @@ void Ball::bounce(Surface surface) {
             velocity.x*=-1;
             break;
     }
+}
+
+float Ball::getSpeed() {
+    return speed;
+}
+
+void Ball::setSpeed(float newSpeed) {
+    speed = newSpeed;
 }

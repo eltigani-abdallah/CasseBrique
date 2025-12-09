@@ -9,7 +9,6 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
 
 
     window.setFramerateLimit(60); //framerate limiter so the game doesn't go too fast
-
     this->windowWidth = windowWidth;
     this->windowHeight = windowHeight;
 
@@ -110,14 +109,29 @@ void GameManager::handleEvents() {
 void GameManager::update(float deltaTime) {
 
     if (state==GameState::CANNON) {
-        sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition());
+        ball.setPosition(sf::Vector2f(windowWidth/2,windowHeight-42));
+
+
+        sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
         sf::Vector2f cannonPos=paddle.getPosition();
 
         float dx = mousePosition.x - cannonPos.x;
         float dy = mousePosition.y - cannonPos.y;
-        sf::Angle angle = sf::degrees(std::atan2(dy, dx) * 180.0f/3.14159f);
+        sf::Angle angle = sf::radians(std::atan2(dy, dx));
 
         paddle.getShapeNonConst().setRotation(angle);
+
+        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+
+            float angleRadians = angle.asRadians();
+            ball.setSpeed(30.0f);
+
+            float velocityX = std::cos(angleRadians) * ball.getSpeed();
+            float velocityY = std::sin(angleRadians) * ball.getSpeed();
+
+            ball.setVelocity(sf::Vector2f(velocityX, velocityY));
+            state = GameState::RUNNING;
+        }
 
 
     }
@@ -274,6 +288,11 @@ void GameManager::render() {
 
     if (state==GameState::CANNON) {
         window.draw(paddle.getShape());
+        window.draw(ball.getShape());
+
+        for (const Brick& brick:bricks) {
+            window.draw(brick.getShape());
+        }
     }
 
     if (state==GameState::MENU) {

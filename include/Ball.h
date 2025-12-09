@@ -10,6 +10,7 @@ class Ball {
 private:
     sf::RectangleShape shape;
     sf::Vector2f velocity;
+    float speed;
 
 
 
@@ -57,10 +58,34 @@ public:
     sf::Vector2f getPosition() const;
 
     /**
+     * set ball position
+     * @param newPosition sf::Vector2f of the position the ball should be in
+     */
+    void setPosition(sf::Vector2f newPosition);
+
+    /**
      *
      * @return sf::Vector2f of the ball's velocity
      */
     sf::Vector2f getVelocity() const;
+
+    /**
+     * set ball velocity to change directions
+     * @param newVelocity new velocity of the ball
+     */
+    void setVelocity(sf::Vector2f newVelocity);
+
+    /**
+     *
+     * @return ball speed
+     */
+    float getSpeed();
+
+    /**
+     *
+     * @param newSpeed speed to set for the ball
+     */
+    void setSpeed(float newSpeed);
 
     /**
      * reset ball to its original position

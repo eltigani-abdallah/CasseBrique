@@ -56,6 +56,10 @@ public:
      */
     void reset();
 
+    /**
+     * get a shape that is NOT a const. used only to change angle in GameManager
+     * @return sf::RectangleShape&
+     */
     sf::RectangleShape& getShapeNonConst();
 
 
