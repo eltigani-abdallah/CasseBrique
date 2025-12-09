@@ -237,7 +237,7 @@ void GameManager::update(float deltaTime) {
 
     if (state == GameState::LOSE) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-            resetGame();
+            state = GameState::MENU;
         }
     // ↑ if player loses ↑
 
