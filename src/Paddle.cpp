@@ -59,3 +59,7 @@ void Paddle::reset() {
     shape.setPosition(sf::Vector2f((screenWidth-shape.getSize().x)/2,
         screenHeight-shape.getSize().y-offset));
 }
+
+sf::RectangleShape& Paddle::getShapeNonConst() {
+    return shape;
+}

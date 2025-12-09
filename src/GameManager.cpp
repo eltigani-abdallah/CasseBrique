@@ -109,6 +109,19 @@ void GameManager::handleEvents() {
 
 void GameManager::update(float deltaTime) {
 
+    if (state==GameState::CANNON) {
+        sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition());
+        sf::Vector2f cannonPos=paddle.getPosition();
+
+        float dx = mousePosition.x - cannonPos.x;
+        float dy = mousePosition.y - cannonPos.y;
+        sf::Angle angle = sf::degrees(std::atan2(dy, dx));
+
+        paddle.getShapeNonConst().setRotation(angle);
+
+
+    }
+
     if (state==GameState::MENU) {
 
         if (startButton->isClicked(window)==true) {
@@ -257,6 +270,10 @@ void GameManager::update(float deltaTime) {
 
 void GameManager::render() {
     window.clear();
+
+    if (state==GameState::CANNON) {
+        window.draw(paddle.getShape());
+    }
 
     if (state==GameState::MENU) {
         window.draw(*titleText);

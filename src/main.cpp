@@ -2,7 +2,7 @@
 
 
 int main() {
-    GameManager gm(600,800, GameState::MENU);
+    GameManager gm(600,800, GameState::CANNON);
 
     gm.run();
 

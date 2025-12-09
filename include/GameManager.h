@@ -7,6 +7,7 @@
 #include "./Button.h"
 #include <vector>
 #include <SFML/System/Clock.hpp>
+#include <cmath>
 #include <algorithm>
 #include <random>
 

@@ -4,6 +4,7 @@
 enum GameState {
     WIN,
     LOSE,
+    CANNON,
     RUNNING,
     PAUSE,
     MENU,

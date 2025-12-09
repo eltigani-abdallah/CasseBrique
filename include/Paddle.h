@@ -56,6 +56,8 @@ public:
      */
     void reset();
 
+    sf::RectangleShape& getShapeNonConst();
+
 
 
 
