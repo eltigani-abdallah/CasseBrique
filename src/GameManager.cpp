@@ -115,7 +115,7 @@ void GameManager::update(float deltaTime) {
 
         float dx = mousePosition.x - cannonPos.x;
         float dy = mousePosition.y - cannonPos.y;
-        sf::Angle angle = sf::degrees(std::atan2(dy, dx));
+        sf::Angle angle = sf::degrees(std::atan2(dy, dx) * 180.0f/3.14159f);
 
         paddle.getShapeNonConst().setRotation(angle);
 
@@ -167,6 +167,7 @@ void GameManager::update(float deltaTime) {
                 lives -=1;
                 livesText->setString("Lives: " + std::to_string(lives));
                 state=GameState::PAUSE;
+
             } else {
                 state=GameState::LOSE;
             }

@@ -10,7 +10,9 @@ Paddle::Paddle(float screenWidth, float screenHeight)
     currentSpeed = 100;
     offset = 20;
 
-    shape.setPosition(sf::Vector2f((screenWidth-shape.getSize().x)/2,
+    shape.setOrigin(shape.getLocalBounds().getCenter());
+
+    shape.setPosition(sf::Vector2f(screenWidth/2,
         screenHeight-shape.getSize().y-offset));
     shape.setFillColor(sf::Color::White);
 }
@@ -40,14 +42,14 @@ void Paddle::move(Direction direction, float deltaTime) {
     switch (direction) {
         case Direction::LEFT:
             currentPosition.x-=currentSpeed*deltaTime;
-            if (currentPosition.x<0) {
-                currentPosition.x=0;
+            if (currentPosition.x-shape.getSize().x/2<0) {
+                currentPosition.x=shape.getSize().x/2;
             }
             break;
         case Direction::RIGHT:
             currentPosition.x+=currentSpeed*deltaTime;
-            if (currentPosition.x>screenWidth-shape.getSize().x) {
-                currentPosition.x=screenWidth-shape.getSize().x;
+            if (currentPosition.x-shape.getSize().x/2>screenWidth-shape.getSize().x) {
+                currentPosition.x=screenWidth-shape.getSize().x/2;
             }
             break;
     }
@@ -56,7 +58,7 @@ void Paddle::move(Direction direction, float deltaTime) {
 }
 
 void Paddle::reset() {
-    shape.setPosition(sf::Vector2f((screenWidth-shape.getSize().x)/2,
+    shape.setPosition(sf::Vector2f(screenWidth/2,
         screenHeight-shape.getSize().y-offset));
 }
 
