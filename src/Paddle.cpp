@@ -62,6 +62,8 @@ void Paddle::reset() {
         screenHeight-shape.getSize().y-offset));
 }
 
-sf::RectangleShape& Paddle::getShapeNonConst() {
-    return shape;
+
+
+void Paddle::setRotation(sf::Angle newRotation) {
+    shape.setRotation(newRotation);
 }

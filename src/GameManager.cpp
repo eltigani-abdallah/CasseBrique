@@ -119,7 +119,7 @@ void GameManager::update(float deltaTime) {
         float dy = mousePosition.y - cannonPos.y;
         sf::Angle angle = sf::radians(std::atan2(dy, dx));
 
-        paddle.getShapeNonConst().setRotation(angle);
+        paddle.setRotation(angle);
 
         if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
 

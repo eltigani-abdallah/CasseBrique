@@ -56,11 +56,13 @@ public:
      */
     void reset();
 
+
+
     /**
-     * get a shape that is NOT a const. used only to change angle in GameManager
-     * @return sf::RectangleShape&
+     *set paddle rotation
+     *@Params newRotation new rotation of the paddle
      */
-    sf::RectangleShape& getShapeNonConst();
+    void setRotation(sf::Angle newRotation);
 
 
 
