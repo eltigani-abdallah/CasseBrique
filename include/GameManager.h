@@ -100,6 +100,10 @@ private:
     std::optional<Button> startButton;
 
     std::optional<Button> quitButton;
+
+    bool prevMouseClicked;
+
+    bool mouseRelease;
 };
 
 

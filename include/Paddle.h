@@ -59,10 +59,12 @@ public:
 
 
     /**
-     *set paddle rotation
-     *@Params newRotation new rotation of the paddle
+     * set paddle rotation
+     * @param newRotation new rotation of the paddle
      */
     void setRotation(sf::Angle newRotation);
+
+
 
 
 

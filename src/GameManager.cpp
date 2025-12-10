@@ -14,6 +14,9 @@ GameManager::GameManager(unsigned int windowWidth, unsigned int windowHeight, Ga
 
     initializeBricks(5,5);
 
+    prevMouseClicked = false;
+    mouseRelease = false;
+
     font.openFromFile("../asset/font/arial.ttf"); //open font from the path specified
 
     // ↓ winText manipulation ↓
@@ -109,7 +112,9 @@ void GameManager::handleEvents() {
 void GameManager::update(float deltaTime) {
 
     if (state==GameState::CANNON) {
-        ball.setPosition(sf::Vector2f(windowWidth/2,windowHeight-42));
+
+
+        ball.setPosition(sf::Vector2f(paddle.getPosition().x, paddle.getPosition().y-50));
 
 
         sf::Vector2f mousePosition = sf::Vector2f(sf::Mouse::getPosition(window));
@@ -121,17 +126,27 @@ void GameManager::update(float deltaTime) {
 
         paddle.setRotation(angle);
 
-        if (sf::Mouse::isButtonPressed(sf::Mouse::Button::Left)) {
+        bool currentMouseClicked = sf::Mouse::isButtonPressed(sf::Mouse::Button::Left);
+        if (!currentMouseClicked) {
+            mouseRelease = true;
+        }
+
+        if (currentMouseClicked && !prevMouseClicked && mouseRelease==true) {
 
             float angleRadians = angle.asRadians();
-            ball.setSpeed(30.0f);
+            ball.setSpeed(15.0f);
 
             float velocityX = std::cos(angleRadians) * ball.getSpeed();
             float velocityY = std::sin(angleRadians) * ball.getSpeed();
 
+            paddle.setRotation(sf::degrees(0));
             ball.setVelocity(sf::Vector2f(velocityX, velocityY));
+
             state = GameState::RUNNING;
         }
+
+        prevMouseClicked = currentMouseClicked;
+
 
 
     }
@@ -255,7 +270,7 @@ void GameManager::update(float deltaTime) {
     // ↓ if player wins ↓
     if (state == GameState::WIN) {
         if (sf::Keyboard::isKeyPressed(sf::Keyboard::Key::Space)) {
-            resetGame();
+            state=GameState::MENU;
         }
 
     }
@@ -289,6 +304,9 @@ void GameManager::render() {
     if (state==GameState::CANNON) {
         window.draw(paddle.getShape());
         window.draw(ball.getShape());
+
+        window.draw(*scoreText);
+        window.draw(*livesText);
 
         for (const Brick& brick:bricks) {
             window.draw(brick.getShape());
@@ -380,7 +398,8 @@ void GameManager::resetGame() {
     livesText->setPosition(sf::Vector2f(windowWidth-livesText->getLocalBounds().getCenter().x,livesText->getLocalBounds().getCenter().y));
 
     initializeBricks(5,5);
-    state=GameState::RUNNING;
+    prevMouseClicked = false;
+    state=GameState::CANNON;
 }
 
 void GameManager::unPause() {
@@ -389,7 +408,8 @@ void GameManager::unPause() {
     scoreText->setPosition(sf::Vector2f(scoreText->getLocalBounds().getCenter().x,scoreText->getLocalBounds().getCenter().y));
     livesText->setPosition(sf::Vector2f(windowWidth-livesText->getLocalBounds().getCenter().x,livesText->getLocalBounds().getCenter().y));
 
-    state=GameState::RUNNING;
+    prevMouseClicked = false;
+    state=GameState::CANNON;
 
 }
 
