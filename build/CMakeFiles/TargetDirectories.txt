@@ -1,3 +1,0 @@
-C:/Users/mitch/Documents/CasseBrique/build/CMakeFiles/main.dir
-C:/Users/mitch/Documents/CasseBrique/build/CMakeFiles/edit_cache.dir
-C:/Users/mitch/Documents/CasseBrique/build/CMakeFiles/rebuild_cache.dir
